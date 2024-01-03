@@ -28,9 +28,24 @@ const fetchFreeGames = async () => {
                     **${game.title}** is now free on Epic Store!\n
                     Grab it now before **${new Date(game.expiryDate).toUTCString()}**!
                 `
+                let storeURL = `https://store.epicgames.com/en-US/p/${game.productSlug}`
                 embed.setDescription(description);
                 embed.setThumbnail(game.keyImages[0].url);
-                channel.map(m => m.send({embeds:[embed]}));
+                channel.map(m => m.send({
+                    embeds:[embed],
+                    components:[{
+                        "type": 1,
+                        "components": [
+                            {
+                                "type": 2,
+                                "label": "Visit Game Page on Epic Store",
+                                "style": 5,
+                                "url": storeURL
+                            }
+                        ]
+            
+                    }]
+                }));
             }
         })
     })
@@ -42,7 +57,7 @@ const embed = new EmbedBuilder()
     .setTitle("New Free Game on Epic Store!");
 
 const job = new CronJob(
-    '0 16 * * *',
+    '5 16 * * *',
     function(){
         fetchFreeGames();
     },
