@@ -19,11 +19,11 @@ const gameEmbed = new EmbedBuilder()
 
 const announcementEmbed = new EmbedBuilder()
     .setColor(0x0099FF)
-    .setTitle(":white_check_mark: Welcome to EpicFree v0.1!")
+    .setTitle(":white_check_mark: Welcome to EpicFree v0.2!")
     .setAuthor({name: "Epic Free"})
 
 const job = new CronJob(
-    '5 16 * * *',
+    '5 16 * * 4',
     function(){
         fetchFreeGames();
     },
@@ -81,7 +81,9 @@ const startUpdateAnnouncement = () => {
         {name: " ", value: "\u200b"},
         {name: ":o: New Button!", value: "A new button has been added below the embedded updates to redirect you to Epic Store game page."},
         {name: " ", value: "\u200b"},
-        {name: ":o: Slight Adjustment", value: "A 5 minutes delay has been update before dropping the newest free game to ensure that the API has been fully updated before accessing."},
+        {name: ":o: Delay Added!", value: "A 5 minutes delay has been update before dropping the newest free game to ensure that the API has been fully updated before accessing."},
+        {name: " ", value: "\u200b"},
+        {name: ":o: No more daily, now weekly!", value: `Now the daily free games have ended. The bot will update weekly. Next free game would be available on ${job.nextDate().toISODate()} 16:00:00 GMT. Mark your calendar!`},
         {name: " ", value: "\u200b"},
     )
     announcementEmbed.setFooter({text: 'Developed by steven-appdev', iconURL: client.user.displayAvatarURL()});
@@ -97,7 +99,7 @@ const startUpdateAnnouncement = () => {
 
 // Retrieving next scheduled job
 const retrieveNextScheduledJob = () => {
-    console.log(`Next job will execute on: ${job.nextDate()}`);
+    console.log(`Next job will execute on: ${job.nextDate().toISODate()}`);
 }
 
 client.on("ready", () => {
